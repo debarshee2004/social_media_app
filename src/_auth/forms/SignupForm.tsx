@@ -14,9 +14,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 import { SignupValidation } from "@/lib/validation";
+import Loader from "@/components/shared/Loader";
+import { Link } from "react-router-dom";
 
 const SignupForm = () => {
-  const isLoading = true;
+  const isLoading = false;
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof SignupValidation>>({
@@ -44,7 +46,7 @@ const SignupForm = () => {
           Create a new account.
         </h3>
         <p className="text-light-3 small-medium md:base-regular mt-2">
-          To use Snapgram enter detals.
+          To use Snapgram please enter detals.
         </p>
 
         <form
@@ -106,10 +108,16 @@ const SignupForm = () => {
           <Button className="shad-button_primary" type="submit">
             {isLoading ? (
               <div className="flex-center gap-2">
-                Loading...
+                <Loader/> Loading...
               </div>
             ): "Sign Up"}
           </Button>
+          <p className="text-small-regular text-light-2 text-center mt-2">
+              Already have an account?
+              <Link to="/sign-in" className="text-primary-500">
+                Login
+              </Link>
+          </p>
         </form>
       </div>
     </Form>
