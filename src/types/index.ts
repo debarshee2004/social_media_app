@@ -1,3 +1,10 @@
+/**
+ * The above types define the shape of various objects used in a TypeScript application, such as
+ * navigation links, user information, and post information.
+ * @property {string} imgURL - A string representing the URL of an image.
+ * @property {string} route - A string representing the route or path for a navigation link.
+ * @property {string} label - A string representing the label or name of a navigation link.
+ */
 export type INavLink = {
     imgURL: string;
     route: string;
