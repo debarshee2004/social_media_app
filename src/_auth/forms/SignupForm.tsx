@@ -10,23 +10,24 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useToast } from "@/components/ui/use-toast"
+import { useToast } from "@/components/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 import { SignupValidation } from "@/lib/validation";
 import Loader from "@/components/shared/Loader";
-import { Link } from "react-router-dom";
-import { createUserAccount } from "@/lib/appwrite/api";//check this line of code if the webpage is not loading
+import { Link, useNavigate } from "react-router-dom";
+import {
+  useCreateUserAccount,
+  useSignInAccount,
+} from "@/lib/react-quary/quriesAndMutations";
+import { useUserContext } from "@/context/AuthContext";
 
 const SignupForm = () => {
-  const isLoading = false;
-
   const { toast } = useToast();
+  const navigate = useNavigate();
+  const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
 
-  // 1. Define your form.
-  /* The code `const form = useForm<z.infer<typeof SignupValidation>>({...})` is initializing a form
-  using the `useForm` hook from the `react-hook-form` library. */
   const form = useForm<z.infer<typeof SignupValidation>>({
     resolver: zodResolver(SignupValidation),
     defaultValues: {
@@ -37,28 +38,39 @@ const SignupForm = () => {
     },
   });
 
-  // const { mutateAsync: createUserAccount, isLoading: isCreatingAccount } = useCreateUserAccountMutation(),
+  const { mutateAsync: createUserAccount, isPending: isCreatingAccount } =
+    useCreateUserAccount();
 
-  // 2. Define a submit handler.
-  /**
-   * The function onSubmit is an asynchronous function that submits a form by creating a new user
-   * account and logging the new user object to the console.
-   * @param values - The `values` parameter is the data submitted from the form. It is inferred from
-   * the `SignupValidation` schema, which defines the structure and validation rules for the form data.
-   */
+  const { mutateAsync: signInAccount, isPending: isSigningIn } =
+    useSignInAccount();
+
   async function onSubmit(values: z.infer<typeof SignupValidation>) {
     //Submission of the form
-    const newUser = await createUserAccount(values);//check this line of code if the webpage is not loading
+    const newUser = await createUserAccount(values); //check this line of code if the webpage is not loading
 
-    if(!newUser){
+    if (!newUser) {
       return toast({
-        title: "Sign Up failed. Please try again.", 
+        title: "Sign Up failed. Please try again.",
       });
     }
 
-    // const session = await signInAccount()
+    const session = await signInAccount({
+      email: values.email,
+      password: values.password,
+    });
 
-    // console.log(newUser);//check this line of code if the webpage is not loading
+    if (!session) {
+      return toast({ title: "Sign in failed. Please try again." });
+    }
+
+    const isLoggedIn = await checkAuthUser();
+
+    if (isLoggedIn) {
+      form.reset();
+      navigate("/");
+    } else {
+      return toast({ title: "Sign in failed. Please try again." });
+    }
   }
 
   return (
@@ -129,17 +141,19 @@ const SignupForm = () => {
             )}
           />
           <Button className="shad-button_primary" type="submit">
-            {isLoading ? (
+            {isCreatingAccount ? (
               <div className="flex-center gap-2">
-                <Loader/> Loading...
+                <Loader /> Loading...
               </div>
-            ): "Sign Up"}
+            ) : (
+              "Sign Up"
+            )}
           </Button>
           <p className="text-small-regular text-light-2 text-center mt-2">
-              Already have an account?
-              <Link to="/sign-in" className="text-primary-500">
-                Login
-              </Link>
+            Already have an account?
+            <Link to="/sign-in" className="text-primary-500">
+              Login
+            </Link>
           </p>
         </form>
       </div>

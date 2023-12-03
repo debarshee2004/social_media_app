@@ -1,4 +1,4 @@
-import { ID } from "appwrite";
+import { ID, Query } from "appwrite";
 
 import { INewUser } from "@/types";
 import { account, appwriteConfig, avatars, databases } from "./config";
@@ -62,5 +62,52 @@ export async function saveUserToDB(user:{
     return newUser;
   } catch (error) {
     console.log(error);
+  }
+}
+
+/**
+ * The function `signInAccount` is an asynchronous function that takes in a user object with email and
+ * password properties, and attempts to create a session using the provided email and password.
+ * @param user - The `user` parameter is an object that contains two properties: `email` and
+ * `password`. The `email` property is a string that represents the user's email address, and the
+ * `password` property is a string that represents the user's password.
+ * @returns the session object.
+ */
+export async function signInAccount(user: {email:string, password: string}) {
+  try {
+    const session = await account.createEmailSession(
+      user.email,
+      user.password,
+    );
+
+    return session;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+/**
+ * The function `getCurrentUser` retrieves the current user's information from a database based on
+ * their account ID.
+ * @returns the current user document if it exists, otherwise it returns null.
+ */
+export async function getCurrentUser() {
+  try {
+    const currentAccount = await account.get();
+
+    if (!currentAccount) throw Error;
+
+    const currentUser = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.userCollectionId,
+      [Query.equal("accountId", currentAccount.$id)]
+    );
+
+    if (!currentUser) throw Error;
+
+    return currentUser.documents[0];
+  } catch (error) {
+    console.log(error);
+    return null;
   }
 }
