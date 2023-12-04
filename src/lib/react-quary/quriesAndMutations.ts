@@ -1,30 +1,34 @@
+// Imports
 import {
-    useQuery,
-    useMutation,
-    useQueryClient,
-    useInfiniteQuery,
-} from "@tanstack/react-query"
-import { createUserAccount, signInAccount } from "../appwrite/api"
-import { INewUser } from "@/types"
+  useQuery,
+  useMutation,
+  useQueryClient,
+  useInfiniteQuery,
+} from "@tanstack/react-query";
+//
+import { INewUser } from "@/types";
+//
+import { createUserAccount, signInAccount } from "../appwrite/api";
 
 /**
- * The function `useCreateUserAccount` is a custom hook that returns a mutation function for creating a
- * user account.
- * @returns The `useCreateUserAccount` function is returning the result of the `useMutation` hook.
+ * Custom hook for creating a new user account using the `useMutation` hook from React Query.
+ *
+ * @returns {Object} - Returns an object with the mutation function and its status.
  */
 export const useCreateUserAccount = () => {
-    return useMutation({
-        mutationFn: (user: INewUser) => createUserAccount(user)
-    })
-}
+  return useMutation({
+    mutationFn: (user: INewUser) => createUserAccount(user),
+  });
+};
 
 /**
- * The `useSignInAccount` function is a custom hook that returns a mutation function for signing in a
- * user account.
- * @returns The `useSignInAccount` function is returning the result of calling the `useMutation` hook.
+ * Custom hook for signing in a user using the `useMutation` hook from React Query.
+ *
+ * @returns {Object} - Returns an object with the mutation function and its status.
  */
 export const useSignInAccount = () => {
-    return useMutation({
-        mutationFn: (user: {email:string, password: string}) => signInAccount(user)
-    })
-}
+  return useMutation({
+    mutationFn: (user: { email: string; password: string }) =>
+      signInAccount(user),
+  });
+};

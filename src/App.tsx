@@ -1,3 +1,4 @@
+// Imports
 import { Routes, Route } from "react-router-dom";
 
 // Public Routes
@@ -8,9 +9,9 @@ import SignupForm from "./_auth/forms/SignupForm";
 // Private Routes
 import RootLayout from "./_root/RootLayout";
 import { Home } from "./_root/pages";
-
-import { Toaster } from "@/components/ui/toaster"
-
+//
+import { Toaster } from "@/components/ui/toaster";
+//
 import "./globals.css";
 
 const App = () => {
