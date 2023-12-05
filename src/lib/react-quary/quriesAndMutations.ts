@@ -8,7 +8,7 @@ import {
 //
 import { INewUser } from "@/types";
 //
-import { createUserAccount, signInAccount } from "../appwrite/api";
+import { createUserAccount, signInAccount, signOutAccount } from "../appwrite/api";
 
 /**
  * Custom hook for creating a new user account using the `useMutation` hook from React Query.
@@ -30,5 +30,11 @@ export const useSignInAccount = () => {
   return useMutation({
     mutationFn: (user: { email: string; password: string }) =>
       signInAccount(user),
+  });
+};
+
+export const useSignOutAccount = () => {
+  return useMutation({
+    mutationFn: signOutAccount,
   });
 };
