@@ -4,6 +4,12 @@ import { useSignOutAccount } from "@/lib/react-quary/quriesAndMutations";
 import { useEffect } from "react";
 import { useUserContext } from "@/context/AuthContext";
 
+/**
+ * The `Topbar` component represents the top navigation bar.
+ *
+ * @component
+ * @returns {JSX.Element} - Returns JSX representing the top navigation bar.
+ */
 const Topbar = () => {
   const { mutate: signOut, isSuccess } = useSignOutAccount();
   const navigate = useNavigate();
@@ -33,10 +39,10 @@ const Topbar = () => {
           >
             <img src="/assets/icons/logout.svg" alt="logout" />
           </Button>
-          <Link to={"/profile/${user.id}"} className="flex-center gap-3">
+          <Link to={`/profile/${user.id}`} className="flex-center gap-3">
             <img
               src={
-                user.imageUrl || `/public/assets/icons/profile-placeholder.svg`
+                user.imageUrl || "/public/assets/icons/profile-placeholder.svg"
               }
               alt="profile"
               className="h-8 w-8 rounded-full"

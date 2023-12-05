@@ -6,6 +6,12 @@ import { useUserContext } from "@/context/AuthContext";
 import { sidebarLinks } from "@/constants";
 import { INavLink } from "@/types";
 
+/**
+ * The `LeftSidebar` component represents the left sidebar navigation menu.
+ *
+ * @component
+ * @returns {JSX.Element} - Returns JSX representing the left sidebar.
+ */
 const LeftSidebar = () => {
   const { mutate: signOut, isSuccess } = useSignOutAccount();
   const navigate = useNavigate();
@@ -28,10 +34,10 @@ const LeftSidebar = () => {
           />
         </Link>
 
-        <Link to={"/profile/${user.id}"} className="flex gap-3 items-center">
+        <Link to={`/profile/${user.id}`} className="flex gap-3 items-center">
           <img
             src={
-              user.imageUrl || `/public/assets/icons/profile-placeholder.svg`
+              user.imageUrl || "/public/assets/icons/profile-placeholder.svg"
             }
             alt="profile"
             className="h-14 w-14 rounded-full"

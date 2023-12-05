@@ -33,6 +33,11 @@ export const useSignInAccount = () => {
   });
 };
 
+/**
+ * Custom hook for signing out a user using the `useMutation` hook from React Query.
+ *
+ * @returns {Object} - Returns an object with the mutation function and its status.
+ */
 export const useSignOutAccount = () => {
   return useMutation({
     mutationFn: signOutAccount,

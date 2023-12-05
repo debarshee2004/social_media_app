@@ -132,8 +132,16 @@ export async function getCurrentUser() {
   }
 }
 
+/**
+ * Signs out the current user by deleting the current session using the Appwrite `account.deleteSession` method.
+ *
+ * @async
+ * @function
+ * @returns {Object | undefined} - Returns the deleted session object on success or undefined on failure.
+ */
 export async function signOutAccount() {
   try {
+    // Delete the current session using the Appwrite `account.deleteSession` method
     const session = await account.deleteSession("current");
     return session;
   } catch (error) {
