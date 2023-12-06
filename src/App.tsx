@@ -8,7 +8,17 @@ import SignupForm from "./_auth/forms/SignupForm";
 
 // Private Routes
 import RootLayout from "./_root/RootLayout";
-import { AllUsers, CreatePost, EditPost, Explore, Home, PostDetails, Profile, Saved, UpdateProfile } from "./_root/pages";
+import {
+  AllUsers,
+  CreatePost,
+  EditPost,
+  Explore,
+  Home,
+  PostDetails,
+  Profile,
+  Saved,
+  UpdateProfile,
+} from "./_root/pages";
 //
 import { Toaster } from "@/components/ui/toaster";
 //
