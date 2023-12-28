@@ -1,9 +1,7 @@
 /** @type {import('tailwindcss').Config} */
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-var-requires, no-undef
 const defaultTheme = require('tailwindcss/defaultTheme')
 
-export default {
+module.exports = {
   darkMode: ['class'],
   content: [
     './pages/**/*.{ts,tsx}',
@@ -64,6 +62,5 @@ export default {
       },
     },
   },
-  // eslint-disable-next-line no-undef
   plugins: [require('tailwindcss-animate')],
 };

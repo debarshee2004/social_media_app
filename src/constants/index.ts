@@ -1,6 +1,3 @@
-/**
- * Array of sidebar links, each containing an image URL, route, and label.
- */
 export const sidebarLinks = [
   {
     imgURL: "/assets/icons/home.svg",
@@ -29,9 +26,6 @@ export const sidebarLinks = [
   },
 ];
 
-/**
- * Array of bottom bar links, each containing an image URL, route, and label.
- */
 export const bottombarLinks = [
   {
     imgURL: "/assets/icons/home.svg",
